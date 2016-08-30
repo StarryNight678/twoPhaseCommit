@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
+//åè°ƒè€…ç¨‹åº
 public class Coordinator {
 
 	private static ArrayList<Socket> partList = new ArrayList<Socket>();
@@ -11,7 +11,7 @@ public class Coordinator {
 
 	static void Init() throws IOException {
 		System.out.println("--Coordinator start--");
-		// ²ÎÓëÕßÁ¬½Ó
+		// å‚ä¸è€…è¿æ¥
 		server = new ServerSocket(20000);
 
 		// Socket client;
@@ -19,21 +19,21 @@ public class Coordinator {
 		for (int i = 0; i < partCount; i++) {
 			partList.add(i, server.accept());
 			Tool.sendMessage(partList.get(i), i + "\n");
-			System.out.println("²ÎÓëÕß" + i + " Æô¶¯");
+			System.out.println("å‚ä¸è€…" + i + " å¯åŠ¨");
 			strRec = Tool.receiveMessage(partList.get(i));
-			System.out.println("½ÓÊÜµ½ÏûÏ¢:" + strRec);
+			System.out.println("æ¥å—åˆ°æ¶ˆæ¯:" + strRec);
 		}
 
 		// server.close();
 
 	}
 
-	// µÚÒ»½×¶Î
+	// ç¬¬ä¸€é˜¶æ®µ
 	static boolean theFirstStage(String inputStr) throws IOException {
-		// Ğ­µ÷Õß½ÚµãÏòËùÓĞ²ÎÓëÕß½ÚµãÑ¯ÎÊÊÇ·ñ¿ÉÒÔÖ´ĞĞÌá½»²Ù×÷£¬²¢¿ªÊ¼µÈ´ı¸÷²ÎÓëÕß½ÚµãµÄÏìÓ¦¡£
+		// åè°ƒè€…èŠ‚ç‚¹å‘æ‰€æœ‰å‚ä¸è€…èŠ‚ç‚¹è¯¢é—®æ˜¯å¦å¯ä»¥æ‰§è¡Œæäº¤æ“ä½œï¼Œå¹¶å¼€å§‹ç­‰å¾…å„å‚ä¸è€…èŠ‚ç‚¹çš„å“åº”ã€‚
 		System.out.println(Signal.QUERY_TO_COMMIT);
 		String strRec = null;
-		boolean flag_step1 = true;// ÊÇ·ñÍê³ÉµÚÒ»½×¶ÎµÄ±êÖ¾
+		boolean flag_step1 = true;// æ˜¯å¦å®Œæˆç¬¬ä¸€é˜¶æ®µçš„æ ‡å¿—
 
 		for (int i = 0; i < partCount; i++) {
 			try {
@@ -55,12 +55,12 @@ public class Coordinator {
 
 	}
 
-	// µÚ¶ş½×¶Î
+	// ç¬¬äºŒé˜¶æ®µ
 	static boolean theSecondStage(boolean flag_step1) throws IOException {
 		boolean flag_step2 = true;
 		String strRec = null;
 		if (flag_step1) {
-			// ÕıÊ½Ìá½»ĞÅÏ¢
+			// æ­£å¼æäº¤ä¿¡æ¯
 			for (int i = 0; i < partCount; i++) {
 				try {
 					Tool.sendMessage(partList.get(i), Signal.COMMIT);
@@ -77,7 +77,7 @@ public class Coordinator {
 			}
 		} else {
 
-			// Ã»ÓĞÍê³É£¬»Ø¹ö
+			// æ²¡æœ‰å®Œæˆï¼Œå›æ»š
 			for (int i = 0; i < partCount; i++) {
 				try {
 					Tool.sendMessage(partList.get(i), Signal.ROLLBACK);
@@ -99,29 +99,29 @@ public class Coordinator {
 
 	}
 
-	// ¿Í»§¶ËÏûÏ¢´¦Àí
+	// å®¢æˆ·ç«¯æ¶ˆæ¯å¤„ç†
 	static void processClientRequests() throws IOException {
 		System.out.println("----ProcessClientRequests----");
 
 		Socket client = server.accept();
-		System.out.println("Óë¿Í»§¶ËÁ¬½Ó³É¹¦£¡");
+		System.out.println("ä¸å®¢æˆ·ç«¯è¿æ¥æˆåŠŸï¼");
 
 		while (true) {
-			// µÈ´ı¿Í»§¶ËµÄÁ¬½Ó£¬Èç¹ûÃ»ÓĞ»ñÈ¡Á¬½Ó
+			// ç­‰å¾…å®¢æˆ·ç«¯çš„è¿æ¥ï¼Œå¦‚æœæ²¡æœ‰è·å–è¿æ¥
 
 			String clientMess = Tool.receiveMessage(client);
-			System.out.println("¿Í»§¶ËµÃµ½ĞÅÏ¢:" + clientMess);
+			System.out.println("å®¢æˆ·ç«¯å¾—åˆ°ä¿¡æ¯:" + clientMess);
 
-			// ¿ªÊ¼´¦Àí¿Í»§¶ËÏûÏ¢
+			// å¼€å§‹å¤„ç†å®¢æˆ·ç«¯æ¶ˆæ¯
 
-			// µÚÒ»½×¶Î
+			// ç¬¬ä¸€é˜¶æ®µ
 			boolean flag1 = theFirstStage(clientMess);		
-			// µÚ¶ş½×¶Î
+			// ç¬¬äºŒé˜¶æ®µ
 			boolean flag2=theSecondStage(flag1);
 
-			if( flag1 & flag2)//Ö»ÒªÓĞÒ»¸ö³ö´í¾ÍÊÇÃ»ÓĞÍê³É
+			if( flag1 & flag2)//åªè¦æœ‰ä¸€ä¸ªå‡ºé”™å°±æ˜¯æ²¡æœ‰å®Œæˆ
 			{
-				// ·µ»Ø¿Í»§¶Ë  ÕıÈ·Íê³ÉĞÅÏ¢
+				// è¿”å›å®¢æˆ·ç«¯  æ­£ç¡®å®Œæˆä¿¡æ¯
 				Tool.sendMessage(client, Signal.OVER);
 				
 			}else
@@ -135,9 +135,9 @@ public class Coordinator {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		// ²ÎÊı³õÊ¼»¯
+		// å‚æ•°åˆå§‹åŒ–
 		Init();
-		// Ğ­µ÷Õß.´¦Àíº¯Êı
+		// åè°ƒè€….å¤„ç†å‡½æ•°
 		processClientRequests();
 	}
 
