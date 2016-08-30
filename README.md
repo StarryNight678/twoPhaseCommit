@@ -51,6 +51,7 @@ java Client
 
 #参考
 [1] 二阶段提交 https://zh.wikipedia.org/wiki/%E4%BA%8C%E9%98%B6%E6%AE%B5%E6%8F%90%E4%BA%A4
+
 [2] 深入理解java异常处理机制http://blog.csdn.net/hguisu/article/details/6155636
 
 
