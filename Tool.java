@@ -6,13 +6,13 @@ import java.io.PrintStream;
 import java.net.Socket;
 
 public class Tool {
-//½ÓÊÜÏûÏ¢
+//æ¥æ”¶æ¶ˆæ¯
 	public static String receiveMessage(Socket socket) throws IOException {
 		BufferedReader buf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		String str = buf.readLine();
 		return str;
 	}
-//·¢ËÍÏûÏ¢
+//å‘é€æ¶ˆæ¯
 	public static void sendMessage(Socket socket, String str) throws IOException {
 		PrintStream out = new PrintStream(socket.getOutputStream());
 		out.println(str);
