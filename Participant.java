@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.io.FileWriter;
-
+//å‚ä¸è€…
 public class Participant {
 	static private int num;
 	static private Socket client;
@@ -19,19 +19,19 @@ public class Participant {
 		this.num = num1;
 	}
 
-	// ³õÊ¼»¯¹ı³Ì
+	// åˆå§‹åŒ–è¿‡ç¨‹
 	static void init() throws UnknownHostException, IOException {
 		// new object
 		// Participant Par = new Participant();
 		client = new Socket("127.0.0.1", 20000);
-		// ÉèÖÃµÈ´ıÊ±¼ä
+		// è®¾ç½®ç­‰å¾…æ—¶é—´
 		//client.setSoTimeout(10000);
 
 		String s1 = Tool.receiveMessage(client);
-		// ÉèÖÃ²ÎÓëÕß±àºÅ
+		// è®¾ç½®å‚ä¸è€…ç¼–å·
 		num = Integer.parseInt(s1);
-		System.out.println("²ÎÓëÕßnum:" + num);
-		// ´¦ÀíµÄÎÄ¼şÃû
+		System.out.println("å‚ä¸è€…num:" + num);
+		// å¤„ç†çš„æ–‡ä»¶å
 		fimeName = ".\\" + "testfile" + num + ".txt";
 		
 		String shealth="Participant "+num+" is ok.";
@@ -40,7 +40,7 @@ public class Participant {
 
 	static boolean WriteFile(String fimeName, String str) throws IOException {
 
-		/* Ğ´ÈëTxtÎÄ¼ş */
+		/* å†™å…¥Txtæ–‡ä»¶ */
 
 		FileWriter writer = new FileWriter(fimeName, true);
 		SimpleDateFormat format = new SimpleDateFormat();
@@ -65,42 +65,42 @@ public class Participant {
 		return true;
 	}
 
-	// ²ÎÓëÕß´¦Àí
+	// å‚ä¸è€…å¤„ç†
 	static boolean participantProcess() throws IOException {
 		String recStr;
 		String stringToWrite=null;
 		while (true) {
 
-			// ½ÓÊÕµÚÒ»´ÎÏûÏ¢
+			// æ¥æ”¶ç¬¬ä¸€æ¬¡æ¶ˆæ¯
 			recStr = Tool.receiveMessage(client);
 			System.out.println("P"+num+"get first message:" + recStr);
 
 			
 			if (recStr.startsWith(Signal.QUERY_TO_COMMIT)) {
-				// Ó¦´ğÕıÈ·
+				// åº”ç­”æ­£ç¡®
 				stringToWrite=recStr.substring(15);
 				Tool.sendMessage(client, Signal.VOTE_YES);
 			} else {
-				// Ó¦´ğÊ§°ÜÊ§°Ü
+				// åº”ç­”å¤±è´¥å¤±è´¥
 				Tool.sendMessage(client, Signal.VOTE_NO);
 			}
 
-			// ½ÓÊÕµÚ¶ş´ÎÏûÏ¢
+			// æ¥æ”¶ç¬¬äºŒæ¬¡æ¶ˆæ¯
 			recStr = Tool.receiveMessage(client);
 			System.out.println("P"+num+" get second message:" + recStr);
 
-			// Ğ­µ÷ÕßĞ­µ÷³É¹¦£¬ÕıÊ½Ğ´ÈëÎÄ¼ş
+			// åè°ƒè€…åè°ƒæˆåŠŸï¼Œæ­£å¼å†™å…¥æ–‡ä»¶
 			if (recStr.equals(Signal.COMMIT)) {
 
 				WriteFile(fimeName, stringToWrite);
-				// ´¦ÀíÍê±Ï£¬Ó¦´ğÏûÏ¢
+				// å¤„ç†å®Œæ¯•ï¼Œåº”ç­”æ¶ˆæ¯
 				Tool.sendMessage(client, Signal.ACKNOWLEDGMENT);
 			}
 
-			// µÃµ½»Ø¹öĞÅºÅ£¬²»Ğ´ÎÄ¼ş¡£·µ»Ø³õÊ¼×´Ì¬
+			// å¾—åˆ°å›æ»šä¿¡å·ï¼Œä¸å†™æ–‡ä»¶ã€‚è¿”å›åˆå§‹çŠ¶æ€
 			if (recStr.equals(Signal.ROLLBACK)) {
 
-				// ´¦ÀíÍê±Ï£¬Ó¦´ğÏûÏ¢
+				// å¤„ç†å®Œæ¯•ï¼Œåº”ç­”æ¶ˆæ¯
 				Tool.sendMessage(client, Signal.ACKNOWLEDGMENT);
 				continue;
 			}
@@ -112,9 +112,9 @@ public class Participant {
 	public static void main(String[] args) throws UnknownHostException, IOException {
 		// TODO Auto-generated method stub
 
-		// ³õÊ¼»¯¹ı³Ì
+		// åˆå§‹åŒ–è¿‡ç¨‹
 		init();
-		// ²ÎÓëÕß´¦Àí¹ı³Ì
+		// å‚ä¸è€…å¤„ç†è¿‡ç¨‹
 		participantProcess();
 
 	}
