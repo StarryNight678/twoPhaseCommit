@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-//协调者程序
+//协调者程序说明
 public class Coordinator {
 
 	private static ArrayList<Socket> partList = new ArrayList<Socket>();
