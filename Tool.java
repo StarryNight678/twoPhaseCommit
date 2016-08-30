@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+//工具类
 public class Tool {
 //接收消息
 	public static String receiveMessage(Socket socket) throws IOException {
